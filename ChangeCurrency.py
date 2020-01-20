@@ -10,32 +10,37 @@ class NegativeValueError(Exception):
 
 class Application(object):
 
+    color = "lightgray"
+    font = 'Helvetica 10 bold'
+
     def __init__(self):
         self.okno=Tk()
-        self.okno.configure(background="gray")
+        self.okno.configure(background=self.color)
         self.okno.geometry("300x300")
         self.okno.title("Konwerter walut")
-        self.ramka = Frame(self.okno,bg="gray")
+        self.ramka = Frame(self.okno, bg=self.color)
         self.ramka.grid()
         
         self.createWidgets()
-        self.ramka.grid_columnconfigure(0,weight=2)
-        self.ramka.grid_columnconfigure(1,weight=0)
+        self.ramka.grid_columnconfigure(0, weight=2)
+        self.ramka.grid_columnconfigure(1, weight=0)
         self.okno.mainloop()
 
     def createWidgets(self):
-        etykieta1=Label(self.ramka, bg="gray",text="Wprowadź kwotę w PLN",anchor='w',font='Helvetica 10 bold')
+        etykieta1=Label(self.ramka, bg=self.color, text="Wprowadź kwotę w PLN", anchor='w',font=self.font)
         etykieta1.grid(row=0,column=0,sticky=W)
 
         self.pole1=Entry(self.ramka)
         self.pole1.grid(row=0,column=1,sticky=W)
-        self.przycisk1=Button(self.ramka, bg="gray",text="Przelicz", width=20,font='Helvetica 10 bold')
+        self.przycisk1=Button(self.ramka, bg=self.color,text="Przelicz", width=20,font=self.font)
         self.przycisk1.grid(row=1,column=0,sticky=W,pady=10)
         self.przycisk1["command"]=self.changeCurrency
 
         c = CurrencyRates()
 
         TextWithLabel.setFirstRow(3)
+        TextWithLabel.setFont(self.font)
+        TextWithLabel.setBgColor(self.color)
 
         self.TextWithLabel = []
         self.TextWithLabel.append(TextWithLabel(self.ramka, "EUR", c.get_rate('PLN', 'EUR')))
